@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomersTable extends Migration
+class AddOrderForeignKeys extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->id();
-            $table->string('full_name');
-            $table->string('email');
-            $table->text('address');
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('food_id')->references('id')->on('food');
         });
     }
 
@@ -29,6 +26,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        //
     }
 }
